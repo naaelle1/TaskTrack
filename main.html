@@ -1,3 +1,203 @@
-<p>
-    hai
-</p>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayo Flam, Semangat</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap');
+
+  :root {
+    --bg: #0E1013;
+    --bg-soft: #15181C;
+    --line: rgba(255,255,255,0.08);
+    --ink: #F2F1ED;
+    --ink-dim: #8A8E94;
+    --accent: #FF6A3D;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 24px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 0%, transparent 75%);
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  .stage {
+    position: relative;
+    width: 100%;
+    max-width: 760px;
+    text-align: center;
+    z-index: 1;
+  }
+
+  .mark {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--bg-soft);
+    animation: rise 700ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  .mark svg {
+    width: 26px;
+    height: 26px;
+    stroke: var(--accent);
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    font-weight: 500;
+    margin-bottom: 18px;
+    animation: rise 700ms 60ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    font-size: clamp(2.6rem, 8vw, 5.2rem);
+    animation: rise 800ms 120ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  h1 .line {
+    display: block;
+  }
+
+  h1 .accent {
+    color: var(--accent);
+  }
+
+  .sub {
+    margin-top: 24px;
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    color: var(--ink-dim);
+    font-weight: 400;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+    animation: rise 800ms 200ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  .divider {
+    width: 1px;
+    height: 56px;
+    background: linear-gradient(var(--line), transparent);
+    margin: 40px auto;
+    animation: rise 800ms 260ms cubic-bezier(.2,.7,.2,1) both;
+  }
+
+  .footer-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg-soft);
+    font-size: 13px;
+    color: var(--ink-dim);
+    letter-spacing: 0.02em;
+    animation: rise 800ms 320ms cubic-bezier(.2,.7,.2,1) both;
+    transition: border-color 240ms ease, color 240ms ease;
+  }
+
+  .footer-row:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .footer-row svg {
+    width: 14px;
+    height: 14px;
+    stroke: var(--accent);
+    flex-shrink: 0;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mark, .eyebrow, h1, .sub, .divider, .footer-row {
+      animation: none !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .divider { margin: 32px auto; height: 40px; }
+  }
+</style>
+</head>
+<body>
+
+  <main class="stage">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 19V5"/>
+        <path d="M5 12l7-7 7 7"/>
+      </svg>
+    </div>
+
+    <p class="eyebrow">Untuk Flam</p>
+
+    <h1>
+      <span class="line">Ayo Flam,</span>
+      <span class="line accent">Semangat.</span>
+      <span class="line">Jangan Menyerah.</span>
+    </h1>
+
+    <p class="sub">
+      Langkah kecil yang konsisten lebih berarti daripada langkah besar yang berhenti di tengah jalan. Terus melangkah.
+    </p>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="footer-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5l3 2"/>
+      </svg>
+      <span>Satu langkah hari ini, lebih dekat ke tujuan</span>
+    </div>
+  </main>
+
+</body>
+</html>
