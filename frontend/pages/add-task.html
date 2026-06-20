@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTrack - Add Task</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="saas-navbar">
+        <a href="dashboard.html" class="logo-container">
+            <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
+            <span class="logo-text">TaskTrack</span>
+        </a>
+
+        <div class="nav-right">
+            <a href="dashboard.html" class="nav-text-link"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        </div>
+    </nav>
+
+    <main class="workspace">
+        <div class="form-page-header">
+            <div>
+                <h1><i class="fa-solid fa-plus-circle"></i> Create New Task</h1>
+                <p>Add a new task to your list and stay organized</p>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <form id="addTaskForm" class="task-form">
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="title">
+                            <span class="label-text">Task Title</span>
+                            <span class="label-required">*</span>
+                        </label>
+                        <input type="text" id="title" class="input-control" placeholder="What do you need to do?" required>
+                        <p class="form-hint">Be clear and specific about your task</p>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                        <div class="form-group">
+                            <label for="subject">
+                                <span class="label-text">Subject Category</span>
+                                <span class="label-required">*</span>
+                            </label>
+                            <input type="text" id="subject" class="input-control" placeholder="e.g., Mathematics" required>
+                            <p class="form-hint">Which subject is this for?</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="priority">
+                                <span class="label-text">Priority Level</span>
+                                <span class="label-required">*</span>
+                            </label>
+                            <select id="priority" class="input-control" required>
+                                <option value="">Select priority...</option>
+                                <option value="LOW">🟢 Low - Flexible deadline</option>
+                                <option value="MEDIUM">🟡 Medium - Important soon</option>
+                                <option value="HIGH">🔴 High - Urgent deadline</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="dueDate">
+                            <span class="label-text">Due Date</span>
+                            <span class="label-required">*</span>
+                        </label>
+                        <input type="date" id="dueDate" class="input-control" required>
+                        <p class="form-hint">When does this task need to be completed?</p>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <a href="dashboard.html" class="btn btn-secondary">
+                        <i class="fa-solid fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-check"></i> Create Task
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script src="../js/task.js"></script>
+</body>
+</html>

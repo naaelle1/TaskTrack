@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTrack - Welcome Back!</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <div class="auth-wrapper">
+        <div class="glass-container auth-card">
+            <div class="auth-header">
+                <a href="index.html" class="logo-container" style="justify-content: center; margin-bottom: 20px;">
+                    <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
+                    <span class="logo-text">TaskTrack</span>
+                </a>
+                <h2>Welcome Back!</h2>
+                <p>Ready to check off some more items today?</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group with-icon">
+                    <label for="email">Your Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" id="email" class="input-control" placeholder="name@university.edu" required>
+                    </div>
+                </div>
+                <div class="form-group with-icon">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" class="input-control" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 12px; height: 50px;">Let's Go! <i class="fa-solid fa-arrow-right-to-bracket"></i></button>
+            </form>
+
+            <div class="auth-footer">
+                Don't have an account yet? <a href="register.html">Create one here</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>

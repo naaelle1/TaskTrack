@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTrack - Dashboard</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav class="saas-navbar">
+        <a href="dashboard.html" class="logo-container">
+            <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
+            <span class="logo-text">TaskTrack</span>
+        </a>
+
+        <div class="nav-right">
+            <a href="profile.html" class="nav-text-link"><i class="fa-solid fa-gear"></i> Settings</a>
+            
+            <div class="profile-dropdown-wrapper">
+                <button class="profile-menu-trigger" id="profileTrigger" title="Profile menu">
+                    <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Felix" class="user-avatar-circle" alt="User Avatar">
+                </button>
+                <div class="profile-dropdown-card" id="profileDropdown">
+                    <div class="mini-profile-identity">
+                        <h4 id="dropdownUser">Buddy User</h4>
+                        <p id="dropdownEmail">student@campus.id</p>
+                    </div>
+                    <ul class="dropdown-action-links">
+                        <li><a href="profile.html"><i class="fa-solid fa-user"></i> View Profile</a></li>
+                        <li class="logout-item"><a href="#" id="logoutBtn"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="workspace">
+        <div class="dashboard-header">
+            <div>
+                <h1 id="welcomeTitle">Good Morning 👋</h1>
+                <p id="welcomeSubtitle">Let's tackle your tasks for today</p>
+            </div>
+            <a href="add-task.html" class="btn btn-primary btn-lg"><i class="fa-solid fa-plus"></i> New Task</a>
+        </div>
+
+        <div class="search-section">
+            <div class="input-wrapper search-bar-wrapper with-icon">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchTask" class="input-control" placeholder="Search your tasks...">
+            </div>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="glass-container metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-list-check"></i></div>
+                <div class="metric-info">
+                    <h3 id="totalTasks">0</h3>
+                    <p>Total Tasks</p>
+                </div>
+            </div>
+            <div class="glass-container metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                <div class="metric-info">
+                    <h3 id="pendingTasks">0</h3>
+                    <p>In Progress</p>
+                </div>
+            </div>
+            <div class="glass-container metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-check-circle"></i></div>
+                <div class="metric-info">
+                    <h3 id="completedTasks">0</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+            <div class="glass-container metric-card">
+                <div class="metric-icon"><i class="fa-solid fa-fire"></i></div>
+                <div class="metric-info">
+                    <h3 id="streakDays">0</h3>
+                    <p>Day Streak</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="tasks-section">
+            <h2 class="section-title">Your Tasks</h2>
+            <div id="taskList" class="task-list-grid">
+                <!-- Dynamic items inside container -->
+            </div>
+            <div id="emptyState" class="empty-state" style="display: none;">
+                <i class="fa-solid fa-inbox"></i>
+                <h3>No tasks yet</h3>
+                <p>Create your first task to get started</p>
+                <a href="add-task.html" class="btn btn-primary">Create Task</a>
+            </div>
+        </div>
+    </main>
+
+    <a href="add-task.html" class="fab-trigger" title="Add new task"><i class="fa-solid fa-plus"></i></a>
+
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>

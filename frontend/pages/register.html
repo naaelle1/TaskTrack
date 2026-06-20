@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskTrack - Join the Tribe</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
+    <div class="auth-wrapper">
+        <div class="glass-container auth-card">
+            <div class="auth-header">
+                <a href="index.html" class="logo-container" style="justify-content: center; margin-bottom: 20px;">
+                    <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
+                    <span class="logo-text">TaskTrack</span>
+                </a>
+                <h2>Join TaskTrack!</h2>
+                <p>Start managing your university schedules with style.</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-group with-icon">
+                    <label for="username">Create Username</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-user"></i>
+                        <input type="text" id="username" class="input-control" placeholder="doodle_king" required>
+                    </div>
+                </div>
+                <div class="form-group with-icon">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" id="email" class="input-control" placeholder="student@campus.id" required>
+                    </div>
+                </div>
+                <div class="form-group with-icon">
+                    <label for="password">Choose Password</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" class="input-control" placeholder="Min. 8 characters" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 12px; height: 50px;">Create Account <i class="fa-solid fa-sparkles"></i></button>
+            </form>
+
+            <div class="auth-footer">
+                Already member of the club? <a href="login.html">Log In</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+</body>
+</html>
