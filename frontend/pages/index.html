@@ -1,52 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskTrack - Doodle Your Tasks!</title>
+    <title>Task Tracker — Navigate Your Academic Milestones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
-    <div class="bg-blob blob-1"></div>
-    <div class="bg-blob blob-2"></div>
-
-    <nav class="public-navbar">
-        <a href="index.html" class="logo-container">
-            <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
-            <span class="logo-text">TaskTrack</span>
-        </a>
-        <div class="nav-right">
-            <a href="login.html" class="btn btn-secondary" style="height: 44px; padding: 0 18px; font-size: 14px;">Log In</a>
-            <a href="register.html" class="btn btn-primary" style="height: 44px; padding: 0 18px; font-size: 14px;">Sign Up</a>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="app-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                Task Tracker
+            </a>
+            <div class="nav-links" style="align-items: center; display: flex; gap: 16px;">
+                <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme" style="margin-right: 8px;">☀️</button>
+                <a href="login.html" class="btn-secondary">Log In</a>
+                <a href="register.html" class="btn-primary">Sign Up</a>
+            </div>
         </div>
     </nav>
 
-    <main class="hero-landing">
-        <h1>Doodle Your Tasks,<br>Conquer Your Day <span>Joyfully!</span></h1>
-        <p>The happiest and cleanest task tracker designed for students. Draw your goals, monitor deadlines effortlessly, and declutter your mind without the boring grids.</p>
-        
-        <a href="register.html" class="btn btn-primary" style="font-size: 16px; padding: 0 32px; height: 54px;">Get Started Free <i class="fa-solid fa-arrow-right" style="margin-left: 5px;"></i></a>
-
-        <div class="features-grid">
-            <div class="glass-container feature-box">
-                <div class="icon" style="background: var(--accent-yellow);"><i class="fa-solid fa-layer-group"></i></div>
-                <h3>Playful Space</h3>
-                <p>An organized, cozy layout built to keep you ultra-focused without any stressful visual clutters.</p>
-            </div>
-            <div class="glass-container feature-box">
-                <div class="icon" style="background: var(--accent-blue); color: white;"><i class="fa-solid fa-chart-simple"></i></div>
-                <h3>Joyful Analytics</h3>
-                <p>Track your weekly milestones easily through cheerful, simple, and intuitive tracker bars.</p>
-            </div>
-            <div class="glass-container feature-box">
-                <div class="icon" style="background: var(--accent-pink);"><i class="fa-solid fa-bell"></i></div>
-                <h3>Friendly Alerts</h3>
-                <p>Never miss a project or task deadline with our clean, high-contrast automated badge indicators.</p>
+    <header class="hero-section">
+        <div class="hero-container">
+            <div class="hero-badge">Engineered for Academic Velocity</div>
+            <h1 class="hero-title">Optimize your pipeline. Command your tasks.</h1>
+            <p class="hero-subtitle">An ultra-minimalist, modular task management landscape built to elevate tracking flow and eliminate project friction.</p>
+            <div class="hero-actions">
+                <a href="dashboard.html" class="btn-primary btn-large">Enter Dashboard</a>
+                <a href="register.html" class="btn-secondary btn-large">Create Free Account</a>
             </div>
         </div>
-    </main>
+    </header>
 
+    <section class="features-section">
+        <div class="section-container">
+            <header class="section-header">
+                <h2 class="section-title">Designed for focus. Formed for speed.</h2>
+                <p class="section-subtitle">Everything you need to keep your courses, priorities, and codebases aligned under a sleek overview interface.</p>
+            </header>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚄</div>
+                    <h3 class="feature-title">Horizontal Pipelines</h3>
+                    <p class="feature-text">Track your operations side-by-side without messy card boxes or nested view clutter.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3 class="feature-title">Fuzzy Search Keys</h3>
+                    <p class="feature-text">Locate any deadline, course string, or active note instantly with raw key matching filters.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌓</div>
+                    <h3 class="feature-title">Universal Aesthetics</h3>
+                    <p class="feature-text">Switch contexts fluidly with a high-contrast theme system crafted for total visual adaptation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-logo">⚡ Task Tracker, Inc.</div>
+            <p class="footer-copyright">&copy; 2026 Task Tracker Workspace Systems.</p>
+        </div>
+    </footer>
+
+    <script src="../js/app.js"></script>
 </body>
 </html>

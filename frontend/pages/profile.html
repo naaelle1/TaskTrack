@@ -1,73 +1,148 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskTrack - Profile Settings</title>
+    <title>Profile — Task Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-
-    <nav class="saas-navbar">
-        <a href="dashboard.html" class="logo-container">
-            <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
-            <span class="logo-text">TaskTrack</span>
-        </a>
-
+<body class="dashboard-body horizontal-layout">
+    <nav class="app-navbar">
+        <div class="nav-left">
+            <a href="dashboard.html" class="app-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                Task Tracker
+            </a>
+        </div>
+        <div class="nav-center">
+            <div class="search-container disabled-search">
+                <span class="search-icon">🔍</span>
+                <input type="text" placeholder="Search parameters locked outside app dashboard..." disabled>
+            </div>
+        </div>
         <div class="nav-right">
-            <a href="dashboard.html" class="nav-text-link"><i class="fa-solid fa-arrow-left"></i> Back</a>
+            <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme">☀️</button>
+            <button class="nav-action-btn" title="Notifications">🔔</button>
+            <div class="profile-dropdown-wrapper" id="profile-menu-trigger">
+                <div class="profile-avatar-sm">N</div>
+                <span class="profile-name-sm">Nana</span>
+                <span class="profile-chevron">▼</span>
+                <div class="profile-dropdown-menu" id="profile-dropdown">
+                    <a href="dashboard.html" class="dropdown-item">⚄ App Dashboard</a>
+                    <button class="dropdown-item" id="open-settings-modal">⚙ Preferences</button>
+                    <hr class="dropdown-divider">
+                    <a href="login.html" class="dropdown-item logout-text">➔ Logout</a>
+                </div>
+            </div>
         </div>
     </nav>
 
-    <main class="workspace">
-        <div class="form-page-header">
-            <div>
-                <h1><i class="fa-solid fa-user-circle"></i> Profile Settings</h1>
-                <p>Manage your account information</p>
-            </div>
+    <main class="app-container profile-page-container">
+        <div style="margin-bottom: 20px;">
+            <a href="dashboard.html" class="back-dashboard-link">◀ Back to Dashboard</a>
         </div>
 
-        <div class="form-container">
-            <div class="profile-card">
-                <div class="profile-avatar-section">
-                    <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Felix" alt="User Avatar" class="profile-avatar-large">
+        <header class="profile-header-workspace">
+            <div class="profile-avatar-wrapper">
+                <div class="profile-avatar">N</div>
+            </div>
+            <div class="profile-meta-info">
+                <h1 class="profile-name">Nana</h1>
+                <p class="profile-role">Student</p>
+            </div>
+        </header>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header"><span class="stat-title">Total Tasks</span></div>
+                <div class="stat-value" id="prof-total">0</div>
+                <p class="stat-desc">Lifetime tasks listed</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><span class="stat-title">Completed Tasks</span></div>
+                <div class="stat-value" id="prof-completed">0</div>
+                <p class="stat-desc">Finished successfully</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><span class="stat-title">Pending Tasks</span></div>
+                <div class="stat-value" id="prof-pending">0</div>
+                <p class="stat-desc">Currently in progress</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header"><span class="stat-title">Completion Rate</span></div>
+                <div class="stat-value" id="prof-rate">0%</div>
+                <p class="stat-desc">Academic closing velocity</p>
+            </div>
+        </section>
+
+        <section class="profile-details-section">
+            <h2 class="container-heading" style="font-size: 1.25rem; font-weight:600; margin-bottom:16px;">Account Information</h2>
+            <div class="profile-details-card">
+                <div class="detail-row">
+                    <span class="detail-label">Full Name</span>
+                    <span class="detail-value">Nana</span>
                 </div>
-
-                <form id="profileForm" class="task-form" style="margin-top: 30px;">
-                    <div class="form-section">
-                        <div class="form-group">
-                            <label for="profileUsername">
-                                <span class="label-text">Username</span>
-                            </label>
-                            <input type="text" id="profileUsername" class="input-control" placeholder="Your username" required>
-                            <p class="form-hint">This is your public profile name</p>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <div class="form-group">
-                            <label for="profileEmail">
-                                <span class="label-text">Email Address</span>
-                            </label>
-                            <input type="email" id="profileEmail" class="input-control" disabled>
-                            <p class="form-hint">Your email address cannot be changed</p>
-                        </div>
-                    </div>
-
-                    <div class="form-divider"></div>
-
-                    <div class="form-actions">
-                        <a href="dashboard.html" class="btn btn-secondary">Cancel</a>
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fa-solid fa-check"></i> Save Changes
-                        </button>
-                    </div>
-                </form>
+                <div class="detail-row">
+                    <span class="detail-label">Email Address</span>
+                    <span class="detail-value">nana@school.edu</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">School</span>
+                    <span class="detail-value">University of Technology</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Major</span>
+                    <span class="detail-value">Computer Science & Engineering</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Bio</span>
+                    <span class="detail-value">Focusing on modern reactive user experiences and interface modular systems. Crafting sleek tools for daily human efficiency.</span>
+                </div>
             </div>
-        </div>
+        </section>
     </main>
 
-    <script src="../js/auth.js"></script>
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Preferences</h3>
+            <form id="settings-form" onsubmit="event.preventDefault();">
+                <div class="form-group flex-settings-row">
+                    <div>
+                        <label class="form-label block-label">Dark Interface Mode</label>
+                        <span class="form-desc-text">Swap context color tones instantly.</span>
+                    </div>
+                    <label class="switch-toggle-container">
+                        <input type="checkbox" id="theme-toggle-checkbox">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <div class="form-group flex-settings-row">
+                    <div>
+                        <label class="form-label block-label">Push Notifications</label>
+                        <span class="form-desc-text">Receive strict alerts near target deadlines.</span>
+                    </div>
+                    <label class="switch-toggle-container">
+                        <input type="checkbox" id="notification-toggle" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="language-selection" class="form-label">System Language</label>
+                    <select id="language-selection" class="form-input">
+                        <option value="en">English (US)</option>
+                        <option value="id">Bahasa Indonesia</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary btn-full" id="close-settings-modal">Done</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
 </body>
 </html>

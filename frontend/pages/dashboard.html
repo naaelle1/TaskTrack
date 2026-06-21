@@ -1,104 +1,212 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TaskTrack - Dashboard</title>
+    <title>Dashboard — Task Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body>
-
-    <nav class="saas-navbar">
-        <a href="dashboard.html" class="logo-container">
-            <div class="logo-mark"><i class="fa-solid fa-feather-pointed"></i></div>
-            <span class="logo-text">TaskTrack</span>
-        </a>
-
+<body class="dashboard-body horizontal-layout">
+    <!-- NAVBAR (Sesuai image_4440f1.png) -->
+    <nav class="app-navbar">
+        <div class="nav-left">
+            <a href="index.html" class="app-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                Task Tracker
+            </a>
+        </div>
+        <div class="nav-center">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="search-input" placeholder="Search tasks, priorities, courses via fuzzy keys..." autocomplete="off">
+            </div>
+        </div>
         <div class="nav-right">
-            <a href="profile.html" class="nav-text-link"><i class="fa-solid fa-gear"></i> Settings</a>
-            
-            <div class="profile-dropdown-wrapper">
-                <button class="profile-menu-trigger" id="profileTrigger" title="Profile menu">
-                    <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Felix" class="user-avatar-circle" alt="User Avatar">
-                </button>
-                <div class="profile-dropdown-card" id="profileDropdown">
-                    <div class="mini-profile-identity">
-                        <h4 id="dropdownUser">Buddy User</h4>
-                        <p id="dropdownEmail">student@campus.id</p>
-                    </div>
-                    <ul class="dropdown-action-links">
-                        <li><a href="profile.html"><i class="fa-solid fa-user"></i> View Profile</a></li>
-                        <li class="logout-item"><a href="#" id="logoutBtn"><i class="fa-solid fa-power-off"></i> Sign Out</a></li>
-                    </ul>
+            <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme">☀️</button>
+            <button class="nav-action-btn" title="Notifications">🔔</button>
+            <!-- Dropdown Profile di Sebelah Kanan -->
+            <div class="profile-dropdown-wrapper" id="profile-menu-trigger">
+                <div class="profile-avatar-sm">N</div>
+                <span class="profile-name-sm">Nana</span>
+                <span class="profile-chevron">▼</span>
+                <div class="profile-dropdown-menu" id="profile-dropdown">
+                    <a href="profile.html" class="dropdown-item">👤 View Profile</a>
+                    <button class="dropdown-item" id="open-settings-modal">⚙ Preferences</button>
+                    <hr class="dropdown-divider">
+                    <a href="login.html" class="dropdown-item logout-text">➔ Logout</a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="workspace">
-        <div class="dashboard-header">
-            <div>
-                <h1 id="welcomeTitle">Good Morning 👋</h1>
-                <p id="welcomeSubtitle">Let's tackle your tasks for today</p>
+    <!-- CONTENT WORKSPACE -->
+    <main class="app-container">
+        <!-- Hero Metrics Summary (Sesuai yang kurang tadi!) -->
+        <header class="dashboard-hero-summary">
+            <div class="summary-left">
+                <h1 class="welcome-title">Welcome back, Nana</h1>
+                <p class="welcome-subtitle">You have <span class="highlight-text" id="summary-pending-count">0 tasks</span> remaining for this week.</p>
             </div>
-            <a href="add-task.html" class="btn btn-primary btn-lg"><i class="fa-solid fa-plus"></i> New Task</a>
-        </div>
+            <div class="summary-right">
+                <div class="mini-progress-wrapper">
+                    <div class="progress-labels">
+                        <span>Weekly Completion Velocity</span>
+                        <span id="velocity-percentage">0%</span>
+                    </div>
+                    <div class="progress-track">
+                        <div class="progress-bar" id="velocity-bar" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
 
-        <div class="search-section">
-            <div class="input-wrapper search-bar-wrapper with-icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchTask" class="input-control" placeholder="Search your tasks...">
-            </div>
-        </div>
-
-        <div class="metrics-grid">
-            <div class="glass-container metric-card">
-                <div class="metric-icon"><i class="fa-solid fa-list-check"></i></div>
-                <div class="metric-info">
-                    <h3 id="totalTasks">0</h3>
-                    <p>Total Tasks</p>
-                </div>
-            </div>
-            <div class="glass-container metric-card">
-                <div class="metric-icon"><i class="fa-solid fa-hourglass-half"></i></div>
-                <div class="metric-info">
-                    <h3 id="pendingTasks">0</h3>
-                    <p>In Progress</p>
-                </div>
-            </div>
-            <div class="glass-container metric-card">
-                <div class="metric-icon"><i class="fa-solid fa-check-circle"></i></div>
-                <div class="metric-info">
-                    <h3 id="completedTasks">0</h3>
-                    <p>Completed</p>
-                </div>
-            </div>
-            <div class="glass-container metric-card">
-                <div class="metric-icon"><i class="fa-solid fa-fire"></i></div>
-                <div class="metric-info">
-                    <h3 id="streakDays">0</h3>
-                    <p>Day Streak</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="tasks-section">
-            <h2 class="section-title">Your Tasks</h2>
-            <div id="taskList" class="task-list-grid">
-                <!-- Dynamic items inside container -->
-            </div>
-            <div id="emptyState" class="empty-state" style="display: none;">
-                <i class="fa-solid fa-inbox"></i>
-                <h3>No tasks yet</h3>
-                <p>Create your first task to get started</p>
-                <a href="add-task.html" class="btn btn-primary">Create Task</a>
-            </div>
-        </div>
+        <!-- Horizontal Pipeline Lanes -->
+        <section class="board-lane-container">
+            <!-- Diisi otomatis oleh JavaScript -->
+        </section>
     </main>
 
-    <a href="add-task.html" class="fab-trigger" title="Add new task"><i class="fa-solid fa-plus"></i></a>
+    <!-- Floating Button Input Task -->
+    <button class="floating-action-button" id="open-add-modal" title="Create Task">+</button>
 
-    <script src="../js/dashboard.js"></script>
+    <!-- MODAL: ADD TASK -->
+    <div class="modal-overlay" id="add-task-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Create Task</h3>
+            <form id="add-task-form">
+                <div class="form-group">
+                    <label for="add-title" class="form-label">Task Title</label>
+                    <input type="text" id="add-title" class="form-input" placeholder="e.g., Thesis Chapter 1 Draft" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-subject" class="form-label">Subject</label>
+                    <input type="text" id="add-subject" class="form-input" placeholder="e.g., Computer Science" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-desc" class="form-label">Description</label>
+                    <textarea id="add-desc" class="form-input form-textarea" placeholder="Provide extra details..."></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="add-deadline" class="form-label">Deadline</label>
+                        <input type="date" id="add-deadline" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="add-priority" class="form-label">Priority</label>
+                        <select id="add-priority" class="form-input">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="add-status" class="form-label">Status</label>
+                    <select id="add-status" class="form-input">
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" id="close-add-modal">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: EDIT TASK -->
+    <div class="modal-overlay" id="edit-task-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Modify Task</h3>
+            <form id="edit-task-form">
+                <input type="hidden" id="edit-id">
+                <div class="form-group">
+                    <label for="edit-title" class="form-label">Task Title</label>
+                    <input type="text" id="edit-title" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-subject" class="form-label">Subject</label>
+                    <input type="text" id="edit-subject" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-desc" class="form-label">Description</label>
+                    <textarea id="edit-desc" class="form-input form-textarea"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-deadline" class="form-label">Deadline</label>
+                        <input type="date" id="edit-deadline" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-priority" class="form-label">Priority</label>
+                        <select id="edit-priority" class="form-input">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="edit-status" class="form-label">Status</label>
+                    <select id="edit-status" class="form-input">
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                    </select>
+                </div>
+                <div class="modal-actions-edit">
+                    <button type="button" class="btn-danger-text" id="delete-edit-modal">Delete Task</button>
+                    <div class="modal-actions-right">
+                        <button type="button" class="btn-secondary" id="close-edit-modal">Cancel</button>
+                        <button type="submit" class="btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: SETTINGS -->
+    <div class="modal-overlay" id="settings-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Preferences</h3>
+            <form id="settings-form" onsubmit="event.preventDefault();">
+                <div class="form-group flex-settings-row">
+                    <div>
+                        <label class="form-label block-label">Dark Interface Mode</label>
+                        <span class="form-desc-text">Swap context color tones instantly.</span>
+                    </div>
+                    <label class="switch-toggle-container">
+                        <input type="checkbox" id="theme-toggle-checkbox">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <div class="form-group flex-settings-row">
+                    <div>
+                        <label class="form-label block-label">Push Notifications</label>
+                        <span class="form-desc-text">Receive strict alerts near target deadlines.</span>
+                    </div>
+                    <label class="switch-toggle-container">
+                        <input type="checkbox" id="notification-toggle" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="language-selection" class="form-label">System Language</label>
+                    <select id="language-selection" class="form-input">
+                        <option value="en">English (US)</option>
+                        <option value="id">Bahasa Indonesia</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-primary btn-full" id="close-settings-modal">Done</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
 </body>
 </html>
