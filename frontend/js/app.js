@@ -85,7 +85,7 @@ function initGlobalUIListeners() {
     // Modal Action Bindings
     setupModalControls("open-add-modal", "close-add-modal", "add-task-modal");
     setupModalControls("open-settings-modal", "close-settings-modal", "settings-modal");
-    
+
     const closeEditBtn = document.getElementById("close-edit-modal");
     if (closeEditBtn) {
         closeEditBtn.addEventListener("click", () => closeModal("edit-task-modal"));
@@ -148,7 +148,7 @@ function closeModal(id) {
 function updateTheme(themeStr) {
     appPreferences.theme = themeStr;
     document.documentElement.setAttribute("data-theme", themeStr);
-    
+
     const themeCheckbox = document.getElementById("theme-toggle-checkbox");
     if (themeCheckbox) themeCheckbox.checked = (themeStr === "dark");
 
@@ -162,9 +162,9 @@ function updateTheme(themeStr) {
 function loadPreferences() {
     const stored = localStorage.getItem("task_tracker_pref");
     if (stored) appPreferences = JSON.parse(stored);
-    
+
     document.documentElement.setAttribute("data-theme", appPreferences.theme);
-    
+
     const themeCheckbox = document.getElementById("theme-toggle-checkbox");
     if (themeCheckbox) themeCheckbox.checked = (appPreferences.theme === "dark");
 
@@ -186,8 +186,8 @@ function renderDynamicKanbanLanes() {
     const filteredTasks = tasks.filter(task => {
         if (!activeSearchQuery) return true;
         return task.title.toLowerCase().includes(activeSearchQuery) ||
-               task.subject.toLowerCase().includes(activeSearchQuery) ||
-               task.priority.toLowerCase().includes(activeSearchQuery);
+            task.subject.toLowerCase().includes(activeSearchQuery) ||
+            task.priority.toLowerCase().includes(activeSearchQuery);
     });
 
     const pendingTasks = filteredTasks.filter(t => t.status === "Pending");
@@ -221,7 +221,7 @@ function renderDynamicKanbanLanes() {
     populateLaneStack("stack-pending", pendingTasks);
     populateLaneStack("stack-completed", completedTasks);
     calculateHeroMetricsSummary();
-    
+
     // Setup clear history button event listener
     const clearHistoryBtn = document.getElementById("clear-history-btn");
     if (clearHistoryBtn) {
@@ -333,7 +333,7 @@ function handleDeleteTaskClick() {
 
 function renderProfileStats() {
     if (!document.getElementById("prof-total")) return;
-    
+
     const total = tasks.length;
     const completed = tasks.filter(t => t.status === "Completed").length;
     const pending = total - completed;
@@ -350,9 +350,28 @@ function openClearHistoryModal() {
 }
 
 function clearCompletedTasks() {
-    tasks = tasks.filter(task => task.status !== "Completed");
-    closeModal("clear-history-modal");
-    renderAllLayouts();
+    // Panggil API Backend untuk hapus history
+    fetch('http://localhost:5000/tasks/completed', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        // credentials: 'include' // Aktifkan ini jika menggunakan session/cookies antar port
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Backend response:", data.message);
+
+            // Update tampilan Frontend (Hapus dari array lokal)
+            tasks = tasks.filter(task => task.status !== "Completed");
+            closeModal("clear-history-modal");
+            renderAllLayouts();
+        })
+        .catch(error => {
+            console.error("Error clearing history:", error);
+            alert("Gagal menghapus history dari server.");
+            closeModal("clear-history-modal");
+        });
 }
 
 function escapeHtml(str) {

@@ -119,6 +119,20 @@ def update_task(task_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+@task_bp.route('/tasks/completed', methods=['DELETE'])
+def delete_completed_tasks():
+    """Clear all completed tasks"""
+    try:
+        if not is_authenticated():
+            return jsonify({"error": "Not authenticated"}), 401
+
+        Task.delete_completed(session['user_id'])
+
+        return jsonify({"message": "Completed tasks cleared successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
 @task_bp.route('/tasks/<task_id>', methods=['DELETE'])
 def delete_task(task_id):
     """Delete task"""

@@ -114,6 +114,15 @@ class Task:
             raise Exception(f"Error deleting task: {str(e)}")
 
     @staticmethod
+    def delete_completed(user_id):
+        """Delete all completed tasks for a specific user"""
+        try:
+            execute_query("DELETE FROM tasks WHERE user_id = ? AND status = 'completed'", [user_id])
+            return True
+        except Exception as e:
+            raise Exception(f"Error deleting completed tasks: {str(e)}")
+
+    @staticmethod
     def search(user_id, keyword):
         """Search tasks by keyword"""
         try:
