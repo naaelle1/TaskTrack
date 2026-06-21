@@ -246,6 +246,28 @@
         </div>
     </div>
 
+    <!-- Custom Delete Confirm Modal -->
+    <div class="modal-overlay" id="delete-user-modal">
+        <div class="modal-content" style="max-width: 450px; text-align: center;">
+            <div style="font-size: 50px; color: #ef4444; margin-bottom: 20px;">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3 class="modal-title" style="margin-bottom: 10px;">Wipe User Account?</h3>
+            <p style="color: var(--text-secondary); margin-bottom: 25px;">
+                This action is <strong>irreversible</strong>. It will permanently delete this user's account and all
+                their active tasks. Proceed?
+            </p>
+
+            <div class="modal-actions" style="display: flex; gap: 15px;">
+                <button type="button" class="btn-secondary"
+                    style="flex: 1; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: none; color: var(--text-main); font-weight: 500; cursor: pointer;"
+                    onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn-primary" style="flex: 1; background-color: #ef4444;"
+                    onclick="confirmDeleteUser()">Yes, Wipe User</button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/app.js"></script>
     <script>
         // Custom Admin Logic extending basic app.js environment variables
@@ -352,8 +374,22 @@
             }
         }
 
-        async function deleteUser(id) {
-            if (!confirm("WARNING: This will permanently wipe this user and ALL of their tasks! Proceed?")) return;
+        let userToDelete = null;
+
+        function deleteUser(id) {
+            userToDelete = id;
+            document.getElementById("delete-user-modal").classList.add("active");
+        }
+
+        function closeDeleteModal() {
+            userToDelete = null;
+            document.getElementById("delete-user-modal").classList.remove("active");
+        }
+
+        async function confirmDeleteUser() {
+            if (!userToDelete) return;
+            const id = userToDelete;
+            closeDeleteModal();
 
             try {
                 const response = await fetch(`${API_BASE}/admin/users/${id}`, {
