@@ -25,7 +25,7 @@ class User:
         """Get user by username"""
         try:
             row = fetch_one(
-                "SELECT id, username, email, password_hash, created_at FROM users WHERE username = ?",
+                "SELECT id, username, email, password_hash, full_name, school, major, bio, created_at FROM users WHERE username = ?",
                 [username]
             )
 
@@ -35,7 +35,11 @@ class User:
                     "username": row[1],
                     "email": row[2],
                     "password_hash": row[3],
-                    "created_at": row[4]
+                    "full_name": row[4],
+                    "school": row[5],
+                    "major": row[6],
+                    "bio": row[7],
+                    "created_at": row[8]
                 }
             return None
         except Exception as e:
@@ -51,7 +55,7 @@ class User:
         """Get user by ID"""
         try:
             row = fetch_one(
-                "SELECT id, username, email, password_hash, created_at FROM users WHERE id = ?",
+                "SELECT id, username, email, password_hash, full_name, school, major, bio, created_at FROM users WHERE id = ?",
                 [user_id]
             )
 
@@ -60,8 +64,24 @@ class User:
                     "id": row[0],
                     "username": row[1],
                     "email": row[2],
-                    "created_at": row[4]
+                    "full_name": row[4],
+                    "school": row[5],
+                    "major": row[6],
+                    "bio": row[7],
+                    "created_at": row[8]
                 }
             return None
         except Exception as e:
             raise Exception(f"Error getting user: {str(e)}")
+
+    @staticmethod
+    def update_profile(user_id, full_name, school, major, bio):
+        """Update user profile"""
+        try:
+            execute_query(
+                "UPDATE users SET full_name = ?, school = ?, major = ?, bio = ? WHERE id = ?",
+                [full_name, school, major, bio, user_id]
+            )
+            return User.get_by_id(user_id)
+        except Exception as e:
+            raise Exception(f"Error updating profile: {str(e)}")

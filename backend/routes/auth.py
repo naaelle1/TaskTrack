@@ -103,3 +103,29 @@ def get_current_user():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@auth_bp.route('/profile', methods=['PUT'])
+def update_profile():
+    """Update current logged in user profile"""
+    try:
+        if 'user_id' not in session:
+            return jsonify({"error": "Not authenticated"}), 401
+
+        data = request.get_json()
+
+        # Update profile
+        updated_user = User.update_profile(
+            user_id=session['user_id'],
+            full_name=data.get('full_name'),
+            school=data.get('school'),
+            major=data.get('major'),
+            bio=data.get('bio')
+        )
+
+        return jsonify({
+            "message": "Profile updated successfully",
+            "user": updated_user
+        }), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

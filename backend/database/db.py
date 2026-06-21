@@ -66,9 +66,20 @@ def init_db():
                 username TEXT UNIQUE NOT NULL,
                 email TEXT,
                 password_hash TEXT NOT NULL,
+                full_name TEXT,
+                school TEXT,
+                major TEXT,
+                bio TEXT,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP
             )
         """)
+
+        # Add new columns to existing schema safely
+        for col, col_type in [("full_name", "TEXT"), ("school", "TEXT"), ("major", "TEXT"), ("bio", "TEXT")]:
+            try:
+                execute_query(f"ALTER TABLE users ADD COLUMN {col} {col_type}")
+            except Exception:
+                pass
 
         execute_query("""
             CREATE TABLE IF NOT EXISTS tasks (

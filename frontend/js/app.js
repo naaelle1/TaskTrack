@@ -5,36 +5,151 @@
  * ==========================================================================
  */
 
-// Initial Static Data State Array
-let tasks = [
-    {
-        id: "task-1",
-        title: "Advanced Data Structures Assignment 2",
-        subject: "Computer Science",
-        description: "Implement balanced AVL trees and custom hashing functions with collision logs.",
-        deadline: "2026-06-25",
-        priority: "High",
-        status: "Pending"
+const t_dict = {
+    en: {
+        welcome_title: "Welcome back",
+        velocity: "Weekly Completion Velocity",
+        in_progress: "In Progress",
+        completed: "Completed Workspace",
+        create_task: "Create Task",
+        task_title: "Task Title",
+        subject: "Subject",
+        description: "Description",
+        deadline: "Deadline",
+        priority: "Priority",
+        status: "Status",
+        cancel: "Cancel",
+        save_task: "Save Task",
+        modify_task: "Modify Task",
+        delete_task: "Delete Task",
+        update_task: "Update",
+        preferences: "Preferences",
+        dark_mode: "Dark Interface Mode",
+        dark_desc: "Swap context color tones instantly.",
+        notifications: "Push Notifications",
+        notif_desc: "Receive strict alerts near target deadlines.",
+        language: "System Language",
+        done: "Done",
+        clear_title: "Clear Completed Tasks",
+        clear_desc: "Are you sure you want... This action cannot be undone.",
+        clear_history: "Clear History",
+        search_ph: "Search tasks, priorities, courses via fuzzy keys...",
+        add_task_ph: "e.g., Thesis Chapter 1 Draft",
+        subject_ph: "e.g., Computer Science",
+        desc_ph: "Provide extra details...",
+        edit_task: "Modify task",
+        no_match: "No matching tasks inside this status.",
+        tasks_rem_prefix: "You have ",
+        tasks_rem_suffix: " tasks remaining for this week.",
+        task_rem_suffix: " task remaining for this week."
     },
-    {
-        id: "task-2",
-        title: "Organic Chemistry Lab Report",
-        subject: "Chemistry",
-        description: "Document distillation phase results and yield calculus metrics.",
-        deadline: "2026-06-28",
-        priority: "Medium",
-        status: "Pending"
-    },
-    {
-        id: "task-3",
-        title: "Macroeconomics Essay Review",
-        subject: "Economics",
-        description: "Analyze dynamic monetary choices under modern quantitative structural rules.",
-        deadline: "2026-07-02",
-        priority: "Low",
-        status: "Completed"
+    id: {
+        welcome_title: "Selamat datang",
+        velocity: "Progres Mingguan",
+        in_progress: "Berjalan",
+        completed: "Terselesaikan",
+        create_task: "Buat Tugas",
+        task_title: "Judul Tugas",
+        subject: "Mata Kuliah",
+        description: "Deskripsi",
+        deadline: "Tenggat Waktu",
+        priority: "Prioritas",
+        status: "Status",
+        cancel: "Batal",
+        save_task: "Simpan Tugas",
+        modify_task: "Ubah Tugas",
+        delete_task: "Hapus Tugas",
+        update_task: "Perbarui",
+        preferences: "Pengaturan",
+        dark_mode: "Mode Antarmuka Gelap",
+        dark_desc: "Ubah instan warna keseluruhan aplikasi.",
+        notifications: "Notifikasi Otomatis",
+        notif_desc: "Terima peringatan dekat waktu tenggat.",
+        language: "Bahasa Sistem",
+        done: "Selesai",
+        clear_title: "Bersihkan Tugas Selesai",
+        clear_desc: "Yakin ingin menghapus seluruh histori tugas? Aksi ini permanen.",
+        clear_history: "Hapus Histori",
+        search_ph: "Cari tugas, prioritas, atau mata kuliah...",
+        add_task_ph: "mis. Draf Bab 1 Skripsi",
+        subject_ph: "mis. Ilmu Komputer",
+        desc_ph: "Tuliskan rincian tambahan...",
+        edit_task: "Ubah",
+        no_match: "Tidak ditemukan tugas pada kolom ini.",
+        tasks_rem_prefix: "Anda memiliki ",
+        tasks_rem_suffix: " tugas tersisa minggu ini.",
+        task_rem_suffix: " tugas tersisa minggu ini."
     }
-];
+};
+
+const dom_map = {
+    ".welcome-title": "welcome_title", // Custom handling needed for name
+    ".progress-labels span:first-child": "velocity",
+    "#add-task-modal .modal-title": "create_task",
+    "label[for='add-title']": "task_title",
+    "label[for='add-subject']": "subject",
+    "label[for='add-desc']": "description",
+    "label[for='add-deadline']": "deadline",
+    "label[for='add-priority']": "priority",
+    "label[for='add-status']": "status",
+    "#add-task-modal button[type='submit']": "save_task",
+    "#close-add-modal": "cancel",
+    "#edit-task-modal .modal-title": "modify_task",
+    "label[for='edit-title']": "task_title",
+    "label[for='edit-subject']": "subject",
+    "label[for='edit-desc']": "description",
+    "label[for='edit-deadline']": "deadline",
+    "label[for='edit-priority']": "priority",
+    "label[for='edit-status']": "status",
+    "#delete-edit-modal": "delete_task",
+    "#edit-task-modal button[type='submit']": "update_task",
+    "#close-edit-modal": "cancel",
+    "#settings-modal .modal-title": "preferences",
+    ".flex-settings-row:nth-child(1) .block-label": "dark_mode",
+    ".flex-settings-row:nth-child(1) .form-desc-text": "dark_desc",
+    ".flex-settings-row:nth-child(2) .block-label": "notifications",
+    ".flex-settings-row:nth-child(2) .form-desc-text": "notif_desc",
+    "label[for='language-selection']": "language",
+    "#close-settings-modal": "done",
+    "#clear-history-modal .modal-title": "clear_title",
+    "#clear-history-modal .modal-desc": "clear_desc",
+    "#clear-history-modal .btn-secondary": "cancel",
+    "#clear-history-modal .btn-danger": "clear_history"
+};
+
+function applyLanguage(lang) {
+    const t = t_dict[lang];
+    if (!t) return;
+
+    // Static DOM mappings
+    for (const [selector, key] of Object.entries(dom_map)) {
+        const el = document.querySelector(selector);
+        if (el) el.textContent = t[key];
+    }
+
+    // Custom handled static
+    const welcomeNode = document.querySelector(".welcome-title");
+    if (welcomeNode) welcomeNode.textContent = t.welcome_title + ", Nana";
+
+    const searchInput = document.getElementById("search-input");
+    if (searchInput) searchInput.placeholder = t.search_ph;
+
+    const addTitle = document.getElementById("add-title");
+    if (addTitle) addTitle.placeholder = t.add_task_ph;
+    const addSubj = document.getElementById("add-subject");
+    if (addSubj) addSubj.placeholder = t.subject_ph;
+    const addDesc = document.getElementById("add-desc");
+    if (addDesc) addDesc.placeholder = t.desc_ph;
+
+    // Trigger dynamic render to update inner JS strings
+    renderDynamicKanbanLanes();
+}
+
+const API_BASE = "http://localhost:5000";
+let currentUser = null;
+
+// Tasks are now loaded from the backend API
+let tasks = [];
 
 let appPreferences = {
     theme: "light",
@@ -47,8 +162,96 @@ let activeSearchQuery = "";
 document.addEventListener("DOMContentLoaded", () => {
     loadPreferences();
     initGlobalUIListeners();
-    renderAllLayouts();
+
+    // Auth Guard + Data Loading for protected pages
+    const protectedPages = ["dashboard.html", "profile.html"];
+    const currentPage = window.location.pathname.split("/").pop();
+
+    if (protectedPages.includes(currentPage)) {
+        fetch(`${API_BASE}/me`, {
+            method: "GET",
+            credentials: "include"
+        })
+            .then(res => {
+                if (!res.ok) {
+                    window.location.href = "login.html";
+                    return;
+                }
+                return res.json();
+            })
+            .then(data => {
+                if (!data) return;
+                currentUser = data.user;
+                updateUserUI();
+                return fetchTasksFromAPI();
+            })
+            .catch(() => {
+                console.warn("Auth check skipped: backend not reachable.");
+                renderAllLayouts();
+            });
+    } else {
+        renderAllLayouts();
+    }
 });
+
+function updateUserUI() {
+    if (!currentUser) return;
+    const name = currentUser.full_name || currentUser.username || "User";
+
+    // Update welcome title
+    const welcomeEl = document.querySelector(".welcome-title");
+    const t = t_dict[appPreferences.language || 'en'];
+    if (welcomeEl) welcomeEl.textContent = `${t.welcome_title}, ${name}`;
+
+    // Update navbar avatar and name
+    const avatarEl = document.querySelector(".profile-avatar-sm");
+    if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
+    const nameEl = document.querySelector(".profile-name-sm");
+    if (nameEl) nameEl.textContent = name;
+
+    // Profile Page Updates
+    const profAvatar = document.querySelector(".profile-avatar");
+    if (profAvatar) profAvatar.textContent = name.charAt(0).toUpperCase();
+
+    const profName = document.querySelector(".profile-name");
+    if (profName) profName.textContent = name;
+
+    const profFullname = document.getElementById("prof-fullname");
+    if (profFullname) profFullname.textContent = name;
+
+    const profEmail = document.getElementById("prof-email");
+    if (profEmail) profEmail.textContent = currentUser.email || "—";
+
+    const profSchool = document.getElementById("prof-school");
+    if (profSchool) profSchool.textContent = currentUser.school || "—";
+
+    const profMajor = document.getElementById("prof-major");
+    if (profMajor) profMajor.textContent = currentUser.major || "—";
+
+    const profBio = document.getElementById("prof-bio");
+    if (profBio) profBio.textContent = currentUser.bio || "—";
+}
+
+function fetchTasksFromAPI() {
+    return fetch(`${API_BASE}/tasks`, {
+        method: "GET",
+        credentials: "include"
+    })
+        .then(res => res.json())
+        .then(data => {
+            // Normalize status casing from backend (e.g. 'pending' -> 'Pending')
+            tasks = (data.tasks || []).map(t => ({
+                ...t,
+                priority: t.priority ? t.priority.charAt(0).toUpperCase() + t.priority.slice(1) : 'Medium',
+                status: t.status ? t.status.charAt(0).toUpperCase() + t.status.slice(1) : 'Pending'
+            }));
+            renderAllLayouts();
+        })
+        .catch(err => {
+            console.error("Failed to fetch tasks:", err);
+            renderAllLayouts();
+        });
+}
 
 function initGlobalUIListeners() {
     // FIX: Klik Nama Profile Berfungsi Akurat Tanpa Mogok
@@ -133,6 +336,17 @@ function initGlobalUIListeners() {
             mobileMenu.classList.remove("active");
         }
     });
+
+    // Language Toggle Update Handler
+    const langSelect = document.getElementById("language-selection");
+    if (langSelect) {
+        langSelect.addEventListener("change", (e) => {
+            const newLang = e.target.value;
+            appPreferences.language = newLang;
+            localStorage.setItem("task_tracker_pref", JSON.stringify(appPreferences));
+            applyLanguage(newLang);
+        });
+    }
 }
 
 function setupModalControls(openId, closeId, modalId) {
@@ -187,6 +401,11 @@ function loadPreferences() {
     if (navbarThemeBtn) {
         navbarThemeBtn.innerHTML = (appPreferences.theme === "dark") ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
     }
+
+    const langSelect = document.getElementById("language-selection");
+    if (langSelect) langSelect.value = appPreferences.language;
+
+    applyLanguage(appPreferences.language);
 }
 
 function renderAllLayouts() {
@@ -208,12 +427,14 @@ function renderDynamicKanbanLanes() {
     const pendingTasks = filteredTasks.filter(t => t.status === "Pending");
     const completedTasks = filteredTasks.filter(t => t.status === "Completed");
 
+    const t = t_dict[appPreferences.language || 'en'];
+
     boardContainer.innerHTML = `
         <div class="board-lane" id="lane-pending">
             <div class="lane-header">
                 <div class="lane-title-group">
                     <span class="lane-indicator-dot pending"></span>
-                    <h2 class="lane-title">In Progress</h2>
+                    <h2 class="lane-title">${t.in_progress}</h2>
                     <span class="lane-counter">${pendingTasks.length}</span>
                 </div>
             </div>
@@ -224,10 +445,10 @@ function renderDynamicKanbanLanes() {
             <div class="lane-header">
                 <div class="lane-title-group">
                     <span class="lane-indicator-dot completed"></span>
-                    <h2 class="lane-title">Completed Workspace</h2>
+                    <h2 class="lane-title">${t.completed}</h2>
                     <span class="lane-counter">${completedTasks.length}</span>
                 </div>
-                ${completedTasks.length > 0 ? `<button class="btn-clear-history" id="clear-history-btn" title="Clear all completed tasks"><i class="fas fa-trash-alt"></i> Clear History</button>` : ''}
+                ${completedTasks.length > 0 ? `<button class="btn-clear-history" id="clear-history-btn" title="Clear all completed tasks"><i class="fas fa-trash-alt"></i> ${t.clear_history}</button>` : ''}
             </div>
             <div class="lane-cards-stack" id="stack-completed"></div>
         </div>
@@ -248,8 +469,10 @@ function populateLaneStack(stackId, laneTasks) {
     const stackContainer = document.getElementById(stackId);
     if (!stackContainer) return;
 
+    const t = t_dict[appPreferences.language || 'en'];
+
     if (laneTasks.length === 0) {
-        stackContainer.innerHTML = `<p class="form-desc-text" style="padding: 12px 4px;">No matching tasks inside this status.</p>`;
+        stackContainer.innerHTML = `<p class="form-desc-text" style="padding: 12px 4px;">${t.no_match}</p>`;
         return;
     }
 
@@ -267,7 +490,7 @@ function populateLaneStack(stackId, laneTasks) {
             </div>
             <div class="task-card-bottom">
                 <div class="task-deadline-info">Due: <strong>${task.deadline}</strong></div>
-                <span class="task-edit-btn" onclick="openEditTaskModal('${task.id}')">Modify task</span>
+                <span class="task-edit-btn" onclick="openEditTaskModal('${task.id}')">${t.edit_task}</span>
             </div>
         `;
         stackContainer.appendChild(card);
@@ -284,26 +507,40 @@ function calculateHeroMetricsSummary() {
     const completedCount = totalCount - pendingCount;
     const rate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
 
-    if (summaryCountEl) summaryCountEl.textContent = `${pendingCount} task${pendingCount === 1 ? '' : 's'}`;
+    const t = t_dict[appPreferences.language || 'en'];
+
+    if (summaryCountEl) summaryCountEl.textContent = `${t.tasks_rem_prefix}${pendingCount}${pendingCount === 1 ? t.task_rem_suffix : t.tasks_rem_suffix}`;
     if (velocityPercentageEl) velocityPercentageEl.textContent = `${rate}%`;
     if (velocityBarEl) velocityBarEl.style.width = `${rate}%`;
 }
 
 function handleAddTaskSubmit(e) {
     e.preventDefault();
-    const newTask = {
-        id: "task-" + Date.now(),
+    const payload = {
         title: document.getElementById("add-title").value,
         subject: document.getElementById("add-subject").value,
         description: document.getElementById("add-desc").value,
         deadline: document.getElementById("add-deadline").value,
-        priority: document.getElementById("add-priority").value,
-        status: document.getElementById("add-status").value
+        priority: document.getElementById("add-priority").value.toLowerCase(),
+        status: document.getElementById("add-status").value.toLowerCase()
     };
-    tasks.unshift(newTask);
-    document.getElementById("add-task-form").reset();
-    closeModal("add-task-modal");
-    renderAllLayouts();
+
+    fetch(`${API_BASE}/tasks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(payload)
+    })
+        .then(res => res.json())
+        .then(() => {
+            document.getElementById("add-task-form").reset();
+            closeModal("add-task-modal");
+            fetchTasksFromAPI();
+        })
+        .catch(err => {
+            console.error("Error creating task:", err);
+            alert("Gagal menambahkan tugas.");
+        });
 }
 
 function openEditTaskModal(id) {
@@ -324,26 +561,48 @@ function openEditTaskModal(id) {
 function handleEditTaskSubmit(e) {
     e.preventDefault();
     const id = document.getElementById("edit-id").value;
-    const taskIndex = tasks.findIndex(t => t.id === id);
+    const payload = {
+        title: document.getElementById("edit-title").value,
+        subject: document.getElementById("edit-subject").value,
+        description: document.getElementById("edit-desc").value,
+        deadline: document.getElementById("edit-deadline").value,
+        priority: document.getElementById("edit-priority").value.toLowerCase(),
+        status: document.getElementById("edit-status").value.toLowerCase()
+    };
 
-    if (taskIndex !== -1) {
-        tasks[taskIndex].title = document.getElementById("edit-title").value;
-        tasks[taskIndex].subject = document.getElementById("edit-subject").value;
-        tasks[taskIndex].description = document.getElementById("edit-desc").value;
-        tasks[taskIndex].deadline = document.getElementById("edit-deadline").value;
-        tasks[taskIndex].priority = document.getElementById("edit-priority").value;
-        tasks[taskIndex].status = document.getElementById("edit-status").value;
-    }
-
-    closeModal("edit-task-modal");
-    renderAllLayouts();
+    fetch(`${API_BASE}/tasks/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify(payload)
+    })
+        .then(res => res.json())
+        .then(() => {
+            closeModal("edit-task-modal");
+            fetchTasksFromAPI();
+        })
+        .catch(err => {
+            console.error("Error updating task:", err);
+            alert("Gagal memperbarui tugas.");
+        });
 }
 
 function handleDeleteTaskClick() {
     const id = document.getElementById("edit-id").value;
-    tasks = tasks.filter(t => t.id !== id);
-    closeModal("edit-task-modal");
-    renderAllLayouts();
+
+    fetch(`${API_BASE}/tasks/${id}`, {
+        method: "DELETE",
+        credentials: "include"
+    })
+        .then(res => res.json())
+        .then(() => {
+            closeModal("edit-task-modal");
+            fetchTasksFromAPI();
+        })
+        .catch(err => {
+            console.error("Error deleting task:", err);
+            alert("Gagal menghapus tugas.");
+        });
 }
 
 function renderProfileStats() {
@@ -365,22 +624,15 @@ function openClearHistoryModal() {
 }
 
 function clearCompletedTasks() {
-    // Panggil API Backend untuk hapus history
-    fetch('http://localhost:5000/tasks/completed', {
+    fetch(`${API_BASE}/tasks/completed`, {
         method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        }
-        // credentials: 'include' // Aktifkan ini jika menggunakan session/cookies antar port
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
     })
         .then(response => response.json())
-        .then(data => {
-            console.log("Backend response:", data.message);
-
-            // Update tampilan Frontend (Hapus dari array lokal)
-            tasks = tasks.filter(task => task.status !== "Completed");
+        .then(() => {
             closeModal("clear-history-modal");
-            renderAllLayouts();
+            fetchTasksFromAPI();
         })
         .catch(error => {
             console.error("Error clearing history:", error);
