@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
@@ -17,7 +18,7 @@
                 Task Tracker
             </a>
             <div class="nav-links" style="align-items: center; display: flex; gap: 16px;">
-                <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme" style="margin-right: 8px;">☀️</button>
+                <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme" style="margin-right: 8px;"><i class="fas fa-sun"></i></button>
                 <a href="login.html" class="btn-secondary">Log In</a>
                 <a href="register.html" class="btn-primary">Sign Up</a>
             </div>
@@ -44,17 +45,17 @@
             </header>
             <div class="features-grid">
                 <div class="feature-card">
-                    <div class="feature-icon">⚄</div>
+                    <div class="feature-icon"><i class="fas fa-columns"></i></div>
                     <h3 class="feature-title">Horizontal Pipelines</h3>
                     <p class="feature-text">Track your operations side-by-side without messy card boxes or nested view clutter.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🔍</div>
+                    <div class="feature-icon"><i class="fas fa-search"></i></div>
                     <h3 class="feature-title">Fuzzy Search Keys</h3>
                     <p class="feature-text">Locate any deadline, course string, or active note instantly with raw key matching filters.</p>
                 </div>
                 <div class="feature-card">
-                    <div class="feature-icon">🌓</div>
+                    <div class="feature-icon"><i class="fas fa-moon"></i></div>
                     <h3 class="feature-title">Universal Aesthetics</h3>
                     <p class="feature-text">Switch contexts fluidly with a high-contrast theme system crafted for total visual adaptation.</p>
                 </div>
@@ -64,8 +65,26 @@
 
     <footer class="main-footer">
         <div class="footer-container">
-            <div class="footer-logo">⚡ Task Tracker, Inc.</div>
-            <p class="footer-copyright">&copy; 2026 Task Tracker Workspace Systems.</p>
+            <div class="footer-left">
+                <div class="footer-branding">
+                    <svg class="footer-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <span class="footer-logo-text">TaskTrack</span>
+                </div>
+                <p class="footer-tagline">Navigate your academic milestones.</p>
+                <p class="footer-credit">Crafted with passion by TaskTrack Team</p>
+            </div>
+            <div class="footer-right">
+                <div class="footer-section">
+                    <h4 class="footer-section-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://github.com" target="_blank" class="footer-link"><i class="fab fa-github"></i> GitHub Repository</a></li>
+                        <li><a href="mailto:support@tasktrack.dev" class="footer-link"><i class="fas fa-bug"></i> Report an Issue</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copyright">© TaskTrack. All rights reserved.</p>
         </div>
     </footer>
 

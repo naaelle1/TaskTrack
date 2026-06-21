@@ -154,7 +154,7 @@ function updateTheme(themeStr) {
 
     const navbarThemeBtn = document.getElementById("theme-toggle-btn");
     if (navbarThemeBtn) {
-        navbarThemeBtn.textContent = (themeStr === "dark") ? "🌙" : "☀️";
+        navbarThemeBtn.innerHTML = (themeStr === "dark") ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
     }
     localStorage.setItem("task_tracker_pref", JSON.stringify(appPreferences));
 }
@@ -170,7 +170,7 @@ function loadPreferences() {
 
     const navbarThemeBtn = document.getElementById("theme-toggle-btn");
     if (navbarThemeBtn) {
-        navbarThemeBtn.textContent = (appPreferences.theme === "dark") ? "🌙" : "☀️";
+        navbarThemeBtn.innerHTML = (appPreferences.theme === "dark") ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
     }
 }
 
@@ -212,6 +212,7 @@ function renderDynamicKanbanLanes() {
                     <h2 class="lane-title">Completed Workspace</h2>
                     <span class="lane-counter">${completedTasks.length}</span>
                 </div>
+                ${completedTasks.length > 0 ? `<button class="btn-clear-history" id="clear-history-btn" title="Clear all completed tasks"><i class="fas fa-trash-alt"></i> Clear History</button>` : ''}
             </div>
             <div class="lane-cards-stack" id="stack-completed"></div>
         </div>
@@ -220,6 +221,12 @@ function renderDynamicKanbanLanes() {
     populateLaneStack("stack-pending", pendingTasks);
     populateLaneStack("stack-completed", completedTasks);
     calculateHeroMetricsSummary();
+    
+    // Setup clear history button event listener
+    const clearHistoryBtn = document.getElementById("clear-history-btn");
+    if (clearHistoryBtn) {
+        clearHistoryBtn.addEventListener("click", openClearHistoryModal);
+    }
 }
 
 function populateLaneStack(stackId, laneTasks) {
@@ -336,6 +343,16 @@ function renderProfileStats() {
     document.getElementById("prof-completed").textContent = completed;
     document.getElementById("prof-pending").textContent = pending;
     document.getElementById("prof-rate").textContent = rate + "%";
+}
+
+function openClearHistoryModal() {
+    openModal("clear-history-modal");
+}
+
+function clearCompletedTasks() {
+    tasks = tasks.filter(task => task.status !== "Completed");
+    closeModal("clear-history-modal");
+    renderAllLayouts();
 }
 
 function escapeHtml(str) {
