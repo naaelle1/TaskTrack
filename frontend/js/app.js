@@ -146,8 +146,9 @@ function applyLanguage(lang) {
 }
 
 // Determine backend API URL smartly based on environment (locally vs hosted)
-const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
-const API_BASE = isLocal ? "http://localhost:5000" : "https://YOUR_BACKEND_URL_NANTI.onrender.com";
+let API_BASE = "https://YOUR_BACKEND_URL_NANTI.onrender.com";
+if (window.location.hostname === "127.0.0.1") API_BASE = "http://127.0.0.1:5000";
+else if (window.location.hostname === "localhost" || window.location.hostname === "") API_BASE = "http://localhost:5000";
 
 let currentUser = null;
 
@@ -211,6 +212,21 @@ function updateUserUI() {
     if (avatarEl) avatarEl.textContent = name.charAt(0).toUpperCase();
     const nameEl = document.querySelector(".profile-name-sm");
     if (nameEl) nameEl.textContent = name;
+
+    // Inject Admin button dynamically if user has admin priority
+    const profileDropdown = document.getElementById("profile-dropdown");
+    if (profileDropdown && currentUser.is_admin && !document.getElementById("nav-admin-link")) {
+        const divider = profileDropdown.querySelector("hr");
+        if (divider) {
+            const adminLink = document.createElement('a');
+            adminLink.href = "admin.html";
+            adminLink.className = "dropdown-item";
+            adminLink.id = "nav-admin-link";
+            adminLink.style.color = "var(--primary-color)";
+            adminLink.innerHTML = `<i class="fas fa-shield-alt"></i> Admin Panel`;
+            profileDropdown.insertBefore(adminLink, divider);
+        }
+    }
 
     // Profile Page Updates
     const profAvatar = document.querySelector(".profile-avatar");

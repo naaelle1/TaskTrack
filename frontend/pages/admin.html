@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel — Task Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .admin-page-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 100px 15px 30px;
+            /* added 100px top padding to avoid navbar collision */
+        }
+
+        .admin-header {
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .admin-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .user-table-wrapper {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+            margin-top: 15px;
+        }
+
+        .user-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .user-table th,
+        .user-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-table th {
+            font-weight: 500;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background-color: var(--bg-color);
+        }
+
+        .user-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .user-table tbody tr:hover {
+            background-color: var(--bg-color);
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .btn-icon:hover {
+            color: var(--primary-color);
+        }
+
+        .btn-icon.delete:hover {
+            color: #ef4444;
+        }
+
+        .user-badges {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar-tiny {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* Mobile Responsive Adjustments */
+        @media (max-width: 600px) {
+            .admin-page-container {
+                padding: 85px 10px 30px;
+            }
+
+            .admin-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .admin-title {
+                font-size: 1.4rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 0.85rem;
+            }
+
+            .user-table th,
+            .user-table td {
+                padding: 12px 8px;
+                font-size: 0.8rem;
+            }
+
+            .user-table th {
+                font-size: 0.75rem;
+            }
+
+            .avatar-tiny {
+                width: 26px;
+                height: 26px;
+                font-size: 0.7rem;
+            }
+
+            .action-btns {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body class="dashboard-body horizontal-layout">
+    <nav class="app-navbar">
+        <div class="nav-left">
+            <a href="dashboard.html" class="app-logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+                Task Tracker <span
+                    style="font-size: 12px; background: var(--primary-color); color: white; padding: 2px 6px; border-radius: 4px; margin-left: 8px;">ADMIN</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme"><i
+                    class="fas fa-sun"></i></button>
+            <div class="profile-dropdown-wrapper" id="profile-menu-trigger">
+                <div class="profile-avatar-sm admin-avatar">A</div>
+                <span class="profile-name-sm">Sys Admin</span>
+                <span class="profile-chevron">▼</span>
+                <div class="profile-dropdown-menu" id="profile-dropdown">
+                    <a href="dashboard.html" class="dropdown-item"><i class="fas fa-columns"></i> Dashboard</a>
+                    <hr class="dropdown-divider">
+                    <a href="index.html" class="dropdown-item logout-text"><i class="fas fa-sign-out-alt"></i>
+                        Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="admin-page-container">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title">User Management Panel</h1>
+                <p class="welcome-subtitle" style="margin-top: 5px;">Manage platform accounts, secure credentials, and
+                    purge invalid users.</p>
+            </div>
+            <button class="btn-primary" onclick="loadUsers()"><i class="fas fa-sync-alt" style="margin-right: 6px;"></i>
+                Refresh Data</button>
+        </div>
+
+        <div class="user-table-wrapper">
+            <table class="user-table">
+                <thead>
+                    <tr>
+                        <th>Access User</th>
+                        <th>Credentials</th>
+                        <th>Registered Date</th>
+                        <th style="width: 100px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="user-table-body">
+                    <!-- Dynamic Data Injected Here -->
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 30px; color: var(--text-secondary);">Loading
+                            accounts...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Edit User Modal -->
+    <div class="modal-overlay" id="edit-user-modal">
+        <div class="modal-content">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h3 class="modal-title">Edit User Credentials</h3>
+                <button class="btn-icon" id="close-user-modal" style="font-size: 1.2rem;"><i
+                        class="fas fa-times"></i></button>
+            </div>
+            <form id="edit-user-form" onsubmit="event.preventDefault(); submitUserEdit();">
+                <input type="hidden" id="edit-user-id">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="edit-username" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="edit-user-email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <input type="password" id="edit-user-password" class="form-input"
+                        placeholder="Leave blank to keep unchanged">
+                </div>
+
+                <div class="modal-actions" style="margin-top: 30px;">
+                    <button type="submit" class="btn-primary btn-full">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/app.js"></script>
+    <script>
+        // Custom Admin Logic extending basic app.js environment variables
+        async function loadUsers() {
+            const tableBody = document.getElementById("user-table-body");
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--text-secondary);">Loading accounts...</td></tr>`;
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/users`, {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    renderUsers(data.users || []);
+                } else if (response.status === 401 || response.status === 403) {
+                    alert("Akses Ditolak: Halaman ini dikunci KHUSUS untuk Administrator.");
+                    window.location.href = 'dashboard.html';
+                } else {
+                    tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ef4444;">Failed to load users from backend.</td></tr>`;
+                }
+            } catch (e) {
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: #ef4444;">Server detached / offline.</td></tr>`;
+            }
+        }
+
+        function renderUsers(users) {
+            const tableBody = document.getElementById("user-table-body");
+            if (users.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; padding: 30px; color: var(--text-secondary);">No registered users yet.</td></tr>`;
+                return;
+            }
+
+            tableBody.innerHTML = users.map(user => `
+                <tr>
+                    <td>
+                        <div class="user-badges">
+                            <div class="avatar-tiny">${(user.username || 'U').charAt(0).toUpperCase()}</div>
+                            <div style="display:flex; flex-direction:column;">
+                                <span style="font-weight: 500; color: var(--text-main);">${user.full_name || 'No Name Setup'}</span>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">ID: ${user.id.substring(0, 8)}...</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display:flex; flex-direction:column;">
+                            <span style="font-weight: 500;">@${user.username}</span>
+                            <span style="font-size: 0.85rem; color: var(--text-secondary);">${user.email}</span>
+                        </div>
+                    </td>
+                    <td style="color: var(--text-secondary); font-size: 0.85rem;">
+                        ${new Date(user.created_at).toLocaleDateString()}
+                    </td>
+                    <td>
+                        <div class="action-btns">
+                            <button class="btn-icon" title="Edit Controls" onclick="openEditUser('${user.id}', '${user.username}', '${user.email}')"><i class="fas fa-edit"></i></button>
+                            <button class="btn-icon delete" title="Wipe User" onclick="deleteUser('${user.id}')"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join("");
+        }
+
+        function openEditUser(id, username, email) {
+            document.getElementById("edit-user-id").value = id;
+            document.getElementById("edit-username").value = username;
+            document.getElementById("edit-user-email").value = email;
+            document.getElementById("edit-user-password").value = "";
+
+            const modal = document.getElementById("edit-user-modal");
+            modal.classList.add("active");
+        }
+
+        document.getElementById("close-user-modal").addEventListener("click", () => {
+            document.getElementById("edit-user-modal").classList.remove("active");
+        });
+
+        async function submitUserEdit() {
+            const id = document.getElementById("edit-user-id").value;
+            const payload = {
+                username: document.getElementById("edit-username").value,
+                email: document.getElementById("edit-user-email").value,
+                password: document.getElementById("edit-user-password").value
+            };
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/users/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    document.getElementById("edit-user-modal").classList.remove("active");
+                    loadUsers();
+                } else {
+                    const data = await response.json();
+                    alert("Update failed: " + (data.error || "Unknown error"));
+                }
+            } catch (e) {
+                alert("Failed connecting to admin tunnel.");
+            }
+        }
+
+        async function deleteUser(id) {
+            if (!confirm("WARNING: This will permanently wipe this user and ALL of their tasks! Proceed?")) return;
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/users/${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+
+                if (response.ok) {
+                    loadUsers();
+                } else {
+                    const data = await response.json();
+                    alert("Delete failed: " + (data.error || "Unknown error"));
+                }
+            } catch (e) {
+                alert("Failed connecting to admin tunnel.");
+            }
+        }
+
+        // Initialize admin on load
+        document.addEventListener("DOMContentLoaded", () => {
+            loadUsers();
+        });
+    </script>
+</body>
+
+</html>

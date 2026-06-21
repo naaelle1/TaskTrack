@@ -1,6 +1,6 @@
 import uuid
 import bcrypt
-from database.db import execute_query, fetch_one
+from database.db import execute_query, fetch_one, fetch_all
 
 
 class User:
@@ -85,3 +85,50 @@ class User:
             return User.get_by_id(user_id)
         except Exception as e:
             raise Exception(f"Error updating profile: {str(e)}")
+
+    @staticmethod
+    def get_all():
+        """Get all users for admin"""
+        try:
+            rows = fetch_all("SELECT id, username, email, full_name, created_at FROM users")
+            users = []
+            for row in rows:
+                users.append({
+                    "id": row[0],
+                    "username": row[1],
+                    "email": row[2],
+                    "full_name": row[3],
+                    "created_at": row[4]
+                })
+            return users
+        except Exception as e:
+            raise Exception(f"Error fetching users: {str(e)}")
+            
+    @staticmethod
+    def delete(user_id):
+        """Delete user and their tasks manually"""
+        try:
+            execute_query("DELETE FROM tasks WHERE user_id = ?", [user_id])
+            execute_query("DELETE FROM users WHERE id = ?", [user_id])
+            return True
+        except Exception as e:
+            raise Exception(f"Error deleting user: {str(e)}")
+
+    @staticmethod
+    def admin_update(user_id, username, email, password=None):
+        """Update user details by admin"""
+        try:
+            if password:
+                password_hash = bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
+                execute_query(
+                    "UPDATE users SET username = ?, email = ?, password_hash = ? WHERE id = ?",
+                    [username, email, password_hash, user_id]
+                )
+            else:
+                execute_query(
+                    "UPDATE users SET username = ?, email = ? WHERE id = ?",
+                    [username, email, user_id]
+                )
+            return User.get_by_id(user_id)
+        except Exception as e:
+            raise Exception(f"Error updating user by admin: {str(e)}")

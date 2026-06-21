@@ -88,6 +88,8 @@ def logout():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+import os
+
 @auth_bp.route('/me', methods=['GET'])
 def get_current_user():
     """Get current logged in user"""
@@ -98,6 +100,9 @@ def get_current_user():
         user = User.get_by_id(session['user_id'])
         if not user:
             return jsonify({"error": "User not found"}), 404
+
+        admin_email = os.getenv('ADMIN_EMAIL')
+        user['is_admin'] = bool(admin_email) and (user.get('email') == admin_email)
 
         return jsonify({"user": user}), 200
 

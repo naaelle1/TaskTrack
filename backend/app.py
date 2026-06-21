@@ -5,6 +5,7 @@ from database.db import init_db
 from routes.auth import auth_bp
 from routes.task import task_bp
 from routes.dashboard import dashboard_bp
+from routes.admin import admin_bp
 
 app = Flask(__name__)
 
@@ -24,6 +25,7 @@ except Exception as e:
 app.register_blueprint(auth_bp, url_prefix='')
 app.register_blueprint(task_bp, url_prefix='')
 app.register_blueprint(dashboard_bp, url_prefix='')
+app.register_blueprint(admin_bp, url_prefix='')
 
 # Health check endpoint
 @app.route('/health', methods=['GET'])
