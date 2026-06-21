@@ -63,7 +63,10 @@
             }
 
             try {
-                const response = await fetch('http://localhost:5000/register', {
+                const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "";
+                const API_BASE = isLocal ? "http://localhost:5000" : "https://YOUR_BACKEND_URL_NANTI.onrender.com";
+
+                const response = await fetch(`${API_BASE}/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ username, email, password })

@@ -145,7 +145,10 @@ function applyLanguage(lang) {
     renderDynamicKanbanLanes();
 }
 
-const API_BASE = "http://localhost:5000";
+// Determine backend API URL smartly based on environment (locally vs hosted)
+const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+const API_BASE = isLocal ? "http://localhost:5000" : "https://YOUR_BACKEND_URL_NANTI.onrender.com";
+
 let currentUser = null;
 
 // Tasks are now loaded from the backend API

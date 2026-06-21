@@ -48,7 +48,10 @@
             const password = document.getElementById('password').value;
 
             try {
-                const response = await fetch('http://localhost:5000/login', {
+                const isLocal = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.hostname === "";
+                const API_BASE = isLocal ? "http://localhost:5000" : "https://YOUR_BACKEND_URL_NANTI.onrender.com";
+
+                const response = await fetch(`${API_BASE}/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include',
