@@ -118,6 +118,21 @@ function initGlobalUIListeners() {
             updateTheme(e.target.checked ? "dark" : "light");
         });
     }
+
+    const mobileMenuToggle = document.querySelector(".nav-hamburger-btn");
+    const mobileMenu = document.getElementById("mobile-nav-menu");
+    if (mobileMenuToggle && mobileMenu) {
+        mobileMenuToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
+            mobileMenu.classList.toggle("active");
+        });
+    }
+
+    document.addEventListener("click", (event) => {
+        if (mobileMenu && !event.target.closest(".nav-hamburger-btn") && !event.target.closest(".nav-mobile-menu")) {
+            mobileMenu.classList.remove("active");
+        }
+    });
 }
 
 function setupModalControls(openId, closeId, modalId) {
