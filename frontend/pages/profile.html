@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile — Task Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body class="dashboard-body horizontal-layout">
     <nav class="app-navbar">
         <div class="nav-left">
             <a href="dashboard.html" class="app-logo">
-                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
                 Task Tracker
             </a>
         </div>
@@ -25,7 +31,8 @@
             </div>
         </div>
         <div class="nav-right">
-            <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme"><i class="fas fa-sun"></i></button>
+            <button class="nav-action-btn" id="theme-toggle-btn" title="Toggle Theme"><i
+                    class="fas fa-sun"></i></button>
             <button class="nav-action-btn" title="Notifications"><i class="fas fa-bell"></i></button>
             <div class="profile-dropdown-wrapper" id="profile-menu-trigger">
                 <div class="profile-avatar-sm">N</div>
@@ -33,9 +40,11 @@
                 <span class="profile-chevron">▼</span>
                 <div class="profile-dropdown-menu" id="profile-dropdown">
                     <a href="dashboard.html" class="dropdown-item"><i class="fas fa-columns"></i> App Dashboard</a>
-                    <button class="dropdown-item" id="open-settings-modal"><i class="fas fa-cog"></i> Preferences</button>
+                    <button class="dropdown-item" id="open-settings-modal"><i class="fas fa-cog"></i>
+                        Preferences</button>
                     <hr class="dropdown-divider">
-                    <a href="login.html" class="dropdown-item logout-text"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a href="index.html" class="dropdown-item logout-text"><i class="fas fa-sign-out-alt"></i>
+                        Logout</a>
                 </div>
             </div>
         </div>
@@ -80,7 +89,8 @@
         </section>
 
         <section class="profile-details-section">
-            <h2 class="container-heading" style="font-size: 1.25rem; font-weight:600; margin-bottom:16px;">Account Information</h2>
+            <h2 class="container-heading" style="font-size: 1.25rem; font-weight:600; margin-bottom:16px;">Account
+                Information</h2>
             <div class="profile-details-card">
                 <div class="detail-row">
                     <span class="detail-label">Full Name</span>
@@ -100,7 +110,8 @@
                 </div>
                 <div class="detail-row">
                     <span class="detail-label">Bio</span>
-                    <span class="detail-value">Focusing on modern reactive user experiences and interface modular systems. Crafting sleek tools for daily human efficiency.</span>
+                    <span class="detail-value">Focusing on modern reactive user experiences and interface modular
+                        systems. Crafting sleek tools for daily human efficiency.</span>
                 </div>
             </div>
         </section>
@@ -146,4 +157,5 @@
 
     <script src="../js/app.js"></script>
 </body>
+
 </html>
