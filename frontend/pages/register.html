@@ -1,29 +1,35 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register — Task Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
 </head>
+
 <body class="auth-body">
     <div class="auth-card">
         <div class="auth-header">
             <a href="index.html" class="auth-logo">
-                <svg class="auth-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="auth-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
                 Task Tracker
             </a>
             <h1 class="auth-title">Create an account</h1>
             <p class="auth-subtitle">Start tracking your academic journey seamlessly</p>
         </div>
-        <form id="register-form" class="auth-form" onsubmit="event.preventDefault(); window.location.href='dashboard.html';">
+        <form id="register-form" class="auth-form">
             <div class="form-group">
-                <label for="reg-name" class="form-label">Full Name</label>
-                <input type="text" id="reg-name" class="form-input" placeholder="Nana" required>
+                <label for="reg-name" class="form-label">Username</label>
+                <input type="text" id="reg-name" class="form-input" placeholder="nana123" required>
             </div>
             <div class="form-group">
                 <label for="reg-email" class="form-label">Email Address</label>
@@ -43,5 +49,38 @@
             <p>Already have an account? <a href="login.html" class="auth-link">Log in instead</a></p>
         </div>
     </div>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const username = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirm = document.getElementById('reg-confirm-password').value;
+
+            if (password !== confirm) {
+                alert("Passwords do not match!");
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:5000/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, email, password })
+                });
+
+                if (response.ok) {
+                    // Berhasil dibuat, masuk ke login
+                    window.location.href = 'login.html';
+                } else {
+                    const data = await response.json();
+                    alert("Error: " + (data.error || "Gagal membuat akun"));
+                }
+            } catch (e) {
+                alert("Server Error: Unable to connect to backend.");
+            }
+        });
+    </script>
 </body>
+
 </html>
