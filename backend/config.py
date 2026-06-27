@@ -9,7 +9,8 @@ class Config:
     DATABASE_URL = os.getenv('DATABASE_URL')
     FLASK_ENV = os.getenv('FLASK_ENV', 'development')
     SESSION_COOKIE_HTTPONLY = True
-    SESSION_COOKIE_SAMESITE = 'Lax'
+    SESSION_COOKIE_SAMESITE = 'None' if os.getenv('FLASK_ENV') == 'production' else 'Lax'
+    SESSION_COOKIE_SECURE = True if os.getenv('FLASK_ENV') == 'production' else False
     PERMANENT_SESSION_LIFETIME = 86400  # 24 hours
 
 class DevelopmentConfig(Config):

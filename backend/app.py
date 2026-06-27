@@ -7,13 +7,22 @@ from routes.task import task_bp
 from routes.dashboard import dashboard_bp
 from routes.admin import admin_bp
 
+import os
+
 app = Flask(__name__)
 
-# Load config
-app.config.from_object(DevelopmentConfig)
+# Load config dynamically
+if os.getenv('FLASK_ENV') == 'production':
+    from config import ProductionConfig
+    app.config.from_object(ProductionConfig)
+else:
+    from config import DevelopmentConfig
+    app.config.from_object(DevelopmentConfig)
 
 # Enable CORS for frontend
-CORS(app, resources={r"/*": {"origins": "*"}}, allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
+# In production, we should ideally restrict this to the frontend URL.
+frontend_url = os.getenv('FRONTEND_URL', '*')
+CORS(app, resources={r"/*": {"origins": frontend_url}}, allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
 
 # Initialize database
 try:
