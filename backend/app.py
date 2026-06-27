@@ -20,9 +20,23 @@ else:
     app.config.from_object(DevelopmentConfig)
 
 # Enable CORS for frontend
-# In production, we should ideally restrict this to the frontend URL.
-frontend_url = os.getenv('FRONTEND_URL', '*')
-CORS(app, resources={r"/*": {"origins": frontend_url}}, allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
+# IMPORTANT: Cannot use '*' with supports_credentials=True (browsers block it)
+# Must explicitly list allowed origins
+allowed_origins = [
+    "https://project-tasktrack.vercel.app",
+    "http://localhost:5501",
+    "http://127.0.0.1:5501",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:5000",
+    "http://127.0.0.1:5000",
+]
+# Also add dynamic FRONTEND_URL from env if set and different
+extra_origin = os.getenv('FRONTEND_URL')
+if extra_origin and extra_origin not in allowed_origins:
+    allowed_origins.append(extra_origin)
+
+CORS(app, resources={r"/*": {"origins": allowed_origins}}, allow_headers=['Content-Type', 'Authorization'], supports_credentials=True)
 
 # Initialize database
 try:
