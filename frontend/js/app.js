@@ -146,7 +146,7 @@ function applyLanguage(lang) {
 }
 
 // Determine backend API URL smartly based on environment (locally vs hosted)
-let API_BASE = "https://YOUR_BACKEND_URL_NANTI.onrender.com";
+let API_BASE = "https://tasktrack-production-a1d2.up.railway.app";
 if (window.location.hostname === "127.0.0.1") API_BASE = "http://127.0.0.1:5000";
 else if (window.location.hostname === "localhost" || window.location.hostname === "") API_BASE = "http://localhost:5000";
 
